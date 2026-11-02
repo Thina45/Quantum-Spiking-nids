@@ -1,0 +1,81 @@
+data:
+  dataset: cicids2017
+  root: data/raw/cicids2017
+  cache_dir: data/processed
+  max_rows: 300000
+  balance: undersample
+  binary: true
+  min_class_count: 500
+  scaler: quantile
+  select_k: 40
+  reducer: pca
+  n_features: 8
+  test_size: 0.2
+  val_size: 0.1
+  seed: 42
+  n_jobs: -1
+encoding:
+  scheme: phase
+  timesteps: 12
+  gain: 1.0
+  tau: 3.0
+  deterministic: false
+  seed: 42
+model:
+  n_qubits: 8
+  n_qlif_layers: 2
+  ansatz_layers: 2
+  ansatz: strong
+  beta: 0.9
+  learn_beta: true
+  threshold: 0.55
+  learn_threshold: false
+  reset: subtract
+  angle_map: sigmoid
+  angle_gain: 2.0
+  angle_bias: -2.0
+  surrogate: fast_sigmoid
+  surrogate_alpha: 5.0
+  readout: rate_mem_prob
+  dropout: 0.1
+  n_classes: 2
+  diff_method: backprop
+noise:
+  enabled: false
+  backend: analytic
+  depolarizing: 0.01
+  amplitude_damping: 0.005
+  phase_damping: 0.0
+  readout_error: 0.0
+  shots: null
+  ibm_backend: ibm_brisbane
+train:
+  epochs: 30
+  batch_size: 256
+  lr: 0.003
+  quantum_lr: 0.01
+  weight_decay: 0.0001
+  optimizer: adamw
+  scheduler: cosine
+  loss: focal
+  focal_gamma: 2.0
+  grad_clip: 1.0
+  patience: 8
+  device: auto
+  num_workers: 0
+  amp: false
+  log_every: 50
+  out_dir: artifacts
+  run_name: qsnn_cicids2017_v1
+  save_best: true
+  seed: 42
+baselines:
+  enabled:
+  - rf
+  - svm
+  - mlp
+  - qsvc
+  - qcnn
+  qsvc_max_train: 500
+  qsvc_reps: 2
+  qcnn_epochs: 20
