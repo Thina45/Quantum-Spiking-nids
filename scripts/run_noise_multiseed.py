@@ -44,6 +44,7 @@ def build_seed_subsample(dataset: str, seed: int, n: int = 2000) -> str:
     from qsnn.config import Config
     from qsnn.data.preprocess import build_dataset
     from qsnn.engine import set_seed
+    import json
     import numpy as np
 
     config = DATASET_CONFIG[dataset]
@@ -75,7 +76,7 @@ def build_seed_subsample(dataset: str, seed: int, n: int = 2000) -> str:
         feature_names=np.array(bundle.feature_names, dtype=object),
         class_names=np.array(bundle.class_names, dtype=object),
         class_weights=bundle.class_weights,
-        meta=np.array([str(bundle.meta)], dtype=object),
+        meta=np.array([json.dumps(bundle.meta)], dtype=object),
     )
     print(f"[io] seed {seed} {dataset}: subsampled test {len(y)} -> {len(idx)} -> {sub_path}")
     return sub_path

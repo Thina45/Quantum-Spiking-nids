@@ -1,0 +1,8 @@
+{
+  "status": "FAILED",
+  "flow_index_in_run": 0,
+  "orig_test_index": 17529,
+  "error": "'NoneType' object has no attribute 'head'",
+  "error_type": "AttributeError",
+  "timestamp": "2026-11-12T23:16:18.702083"
+}

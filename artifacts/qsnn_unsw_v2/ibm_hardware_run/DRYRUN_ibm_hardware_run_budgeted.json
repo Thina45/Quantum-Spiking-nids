@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-11-12T23:17:08.772700",
+  "dry_run": true,
+  "backend": "ibm_fez",
+  "shots": 96,
+  "budget_seconds": 10.0,
+  "n_flows_requested": 5,
+  "n_flows_completed": 0,
+  "stopped_early": true,
+  "stop_reason": "stopping before flow 0 (index 7409): used 0.0s so far, next flow projected to cost up to 343.2s (24 jobs x 11.0s x 1.3 margin), budget is 10.0s",
+  "flows": [],
+  "agreement": {
+    "n_matching": 0,
+    "n_total": 0,
+    "fraction": null
+  },
+  "metrics_hardware": null,
+  "metrics_simulator": null
+}

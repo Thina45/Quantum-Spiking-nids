@@ -1,0 +1,36 @@
+{
+  "timestamp": "2026-11-12T23:27:03.455406",
+  "dry_run": false,
+  "backend": "ibm_fez",
+  "shots": 96,
+  "budget_seconds": 600.0,
+  "n_flows_requested": 5,
+  "n_flows_completed": 1,
+  "stopped_early": true,
+  "stop_reason": "stopping before flow 1 (index 16180): used 264.0s so far, next flow projected to cost up to 343.2s (24 jobs x 11.0s x 1.3 margin), budget is 600.0s",
+  "flows": [
+    {
+      "flow_index_in_run": 0,
+      "orig_test_index": 7409,
+      "y_true": 0,
+      "y_pred_hardware": 0,
+      "probs_hardware": [
+        0.9991206526756287,
+        0.0008793493616394699
+      ],
+      "y_pred_simulator": 0,
+      "probs_simulator": [
+        0.9560568332672119,
+        0.043943166732788086
+      ],
+      "wall_seconds_proxy": 343.2
+    }
+  ],
+  "agreement": {
+    "n_matching": 1,
+    "n_total": 1,
+    "fraction": 1.0
+  },
+  "metrics_hardware": null,
+  "metrics_simulator": null
+}

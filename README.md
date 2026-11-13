@@ -4,6 +4,12 @@
 Jayati Jain (23BDS0056) · Piyush Raj (23BDS0105) · Hiemal Rana (23BDS0180)
 Guide: Parthiban Krishnamoorthy
 
+This repository accompanies a submission to *Scientific Reports*. It contains the
+full QSNN-NIDS pipeline, every script used to produce the paper's reported
+numbers, and the raw validation artifacts (multi-seed results, noise-robustness
+sweeps, and a real IBM Quantum hardware run) referenced in the paper's Data
+availability statement.
+
 ---
 
 ## 1. What this is, and why it's novel
@@ -302,13 +308,62 @@ qsnn_nids/
 └── scripts/           prepare_data · train · eval_noise · ablation · smoke_test
 ```
 
-## 10. Status, and two things to know before you train
+## 10. Reproducing the paper's results
+
+All numbers reported in the paper come from actual runs in this repository, not
+estimates. To reproduce them end to end:
+
+```bash
+# 1. environment
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+
+# 2. preprocess both datasets once (download UNSW-NB15 / CIC-IDS2017 into
+#    data/raw/ first -- see Section 2; raw CSVs are not redistributed here)
+python scripts/prepare_data.py --config configs/unsw_nb15.yaml
+python scripts/prepare_data.py --config configs/cicids2017.yaml
+
+# 3. the seed-42 run reported as the paper's headline numbers
+python scripts/train.py --config configs/unsw_nb15.yaml --bundle data/processed/unsw_nb15.npz
+python scripts/train.py --config configs/cicids2017.yaml --bundle data/processed/cicids2017.npz
+
+# 4. multi-seed robustness validation (4 additional seeds x both datasets,
+#    resumable with --resume if interrupted)
+python scripts/run_multiseed.py --datasets unsw_nb15 cicids2017 --seeds 7 13 99 2024
+
+# 5. noise-robustness sweep at 3 seeds (6 depolarizing levels, stratified subsample)
+python scripts/run_noise_multiseed.py --datasets unsw_nb15 cicids2017 --seeds 7 13
+
+# 6. aggregate into mean +/- std tables and flag outliers/collapses
+python scripts/aggregate_seeds.py
+```
+
+Full results of steps 4-6 (per-seed JSON/CSV outputs and the aggregated
+mean +/- std tables) are committed under `artifacts/`, with a written summary and
+outlier/collapse analysis in `artifacts/MULTISEED_VALIDATION_REPORT.md`.
+
+### Real IBM Quantum hardware validation
+
+```bash
+# single-flow, budget-enforced real-hardware run (dry-run first, no network calls)
+python scripts/run_ibm_hardware_budgeted.py --n-flows 5 --shots 96 \
+    --ibm-backend ibm_fez --budget-seconds 600 --dry-run
+python scripts/run_ibm_hardware_budgeted.py --n-flows 5 --shots 96 \
+    --ibm-backend ibm_fez --budget-seconds 600
+```
+
+Requires IBM Quantum Platform credentials (`qiskit-ibm-runtime`). Full results,
+including a documented limitation in batched hardware submission, are in
+`artifacts/IBM_HARDWARE_VALIDATION_REPORT.md` and
+`artifacts/qsnn_unsw_v2/ibm_hardware_run/`.
+
+## 11. Status, and two things to know before you train
 
 The model, pipeline, baselines, noise simulation and ablations are implemented and
 verified end-to-end by `scripts/smoke_test.py` (11/11 checks pass on synthetic
-data), and all five entry points run clean. **No results have been produced on
-UNSW-NB15 or CIC-IDS2017** — training is intended to run on cloud resources. Every
-accuracy number in the write-up must come from an actual run.
+data). Full results have been produced on both UNSW-NB15 and CIC-IDS2017 (5 seeds
+each), a 3-seed noise-robustness sweep, and a real IBM Quantum hardware
+validation run — see Section 10 and `artifacts/` for the complete outputs.
 
 Two design faults were found and fixed while bringing the model up, both worth
 knowing because the naive version of each is what most tutorial QSNN code does:

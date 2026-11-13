@@ -1,0 +1,9 @@
+{
+  "status": "FAILED",
+  "error": "'HTTPSConnectionPool(host=\\'quantum.cloud.ibm.com\\', port=443): Max retries exceeded with url: /api/v1/jobs/dbqua4mjjaos73ahvm1g?exclude_params=true (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x00000185D20DF4D0>: Failed to resolve \\'quantum.cloud.ibm.com\\' ([Errno 11001] getaddrinfo failed)\"))'",
+  "error_type": "RequestsApiError",
+  "backend": "ibm_fez",
+  "shots": 96,
+  "n_samples": 30,
+  "timestamp": "2026-11-12T22:45:22.122416"
+}
