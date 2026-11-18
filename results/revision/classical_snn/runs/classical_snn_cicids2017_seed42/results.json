@@ -1,0 +1,129 @@
+{
+  "status": "OK",
+  "dataset": "cicids2017",
+  "seed": 42,
+  "epochs_run": 30,
+  "wall_seconds": 367.61447620391846,
+  "detection_metrics": {
+    "accuracy": 0.9836970911979422,
+    "balanced_accuracy": 0.9774370659667451,
+    "precision": 0.9512470588235294,
+    "recall": 0.9670844895225337,
+    "f1": 0.9591003985576011,
+    "f1_macro": 0.9744599687421414,
+    "mcc": 0.9489712477453897,
+    "tp": 10107,
+    "tn": 41905,
+    "fp": 518,
+    "fn": 344,
+    "fpr": 0.01221035758904368,
+    "fnr": 0.03291551047746627,
+    "tnr_specificity": 0.9877896424109563,
+    "detection_rate": 0.9670844895225337,
+    "roc_auc": 0.9966849968253875,
+    "pr_auc": 0.9896793613037111
+  },
+  "spike_rate": 0.3139241635799408,
+  "latency_ms_per_sample": 0.038289062558760634,
+  "param_counts": {
+    "current_source_params": 96,
+    "other_classical_params": 244,
+    "total_params": 340
+  },
+  "env": {
+    "torch_version": "2.14.0+cpu",
+    "python_version": "3.13.0",
+    "cpu": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "n_cpu": 16
+  },
+  "config": {
+    "data": {
+      "dataset": "cicids2017",
+      "root": "data/raw/cicids2017",
+      "cache_dir": "data/processed",
+      "max_rows": 300000,
+      "balance": "undersample",
+      "binary": true,
+      "min_class_count": 500,
+      "scaler": "quantile",
+      "select_k": 40,
+      "reducer": "pca",
+      "n_features": 8,
+      "test_size": 0.2,
+      "val_size": 0.1,
+      "seed": 42,
+      "n_jobs": -1
+    },
+    "encoding": {
+      "scheme": "phase",
+      "timesteps": 12,
+      "gain": 1.0,
+      "tau": 3.0,
+      "deterministic": false,
+      "seed": 42
+    },
+    "model": {
+      "n_qubits": 8,
+      "n_qlif_layers": 2,
+      "ansatz_layers": 2,
+      "ansatz": "strong",
+      "beta": 0.9,
+      "learn_beta": true,
+      "threshold": 0.55,
+      "learn_threshold": false,
+      "reset": "subtract",
+      "angle_map": "sigmoid",
+      "angle_gain": 2.0,
+      "angle_bias": -2.0,
+      "surrogate": "fast_sigmoid",
+      "surrogate_alpha": 5.0,
+      "readout": "rate_mem_prob",
+      "dropout": 0.1,
+      "n_classes": 2,
+      "diff_method": "backprop"
+    },
+    "noise": {
+      "enabled": false,
+      "backend": "analytic",
+      "depolarizing": 0.01,
+      "amplitude_damping": 0.005,
+      "phase_damping": 0.0,
+      "readout_error": 0.0,
+      "shots": null,
+      "ibm_backend": "ibm_brisbane"
+    },
+    "train": {
+      "epochs": 30,
+      "batch_size": 256,
+      "lr": 0.003,
+      "quantum_lr": 0.01,
+      "weight_decay": 0.0001,
+      "optimizer": "adamw",
+      "scheduler": "cosine",
+      "loss": "focal",
+      "focal_gamma": 2.0,
+      "grad_clip": 1.0,
+      "patience": 8,
+      "device": "auto",
+      "num_workers": 0,
+      "amp": false,
+      "log_every": 50,
+      "out_dir": "results/revision/classical_snn\\runs",
+      "run_name": "classical_snn_cicids2017_seed42",
+      "save_best": true,
+      "seed": 42
+    },
+    "baselines": {
+      "enabled": [
+        "rf",
+        "svm",
+        "mlp",
+        "qsvc",
+        "qcnn"
+      ],
+      "qsvc_max_train": 500,
+      "qsvc_reps": 2,
+      "qcnn_epochs": 20
+    }
+  }
+}
