@@ -1,4 +1,4 @@
-# QSNN-NIDS — Quantum Spiking Neural Network for Network Intrusion Detection
+# QSNN-NIDS: A Quantum Leaky Integrate-and-Fire Spiking Network for Intrusion Detection under Simulated Depolarizing Noise
 
 **B.Tech BCSE497J Project–I · Network Intrusion Detection using QML**
 Jayati Jain (23BDS0056) · Piyush Raj (23BDS0105) · Hiemal Rana (23BDS0180)
@@ -357,7 +357,36 @@ including a documented limitation in batched hardware submission, are in
 `artifacts/IBM_HARDWARE_VALIDATION_REPORT.md` and
 `artifacts/qsnn_unsw_v2/ibm_hardware_run/`.
 
-## 11. Status, and two things to know before you train
+## 11. Classical spiking-network ablation
+
+What it tests: whether the quantum circuit inside each QLIF layer (the trainable
+entangling ansatz) is contributing a detection-accuracy advantage over a
+parameter-matched classical replacement, at the same 96/244/340 parameter split.
+The circuit is swapped for `Linear(8,3,bias=False) -> Linear(3,8,bias=False) ->
+sigmoid` (96 params, matching the quantum ansatz exactly); every other
+hyperparameter, the preprocessing, and the seed handling are identical and
+unmodified. Full methodology and code-quoted answers on exactly which equations
+this does and does not match are in `results/revision/classical_snn/REPORT.md`.
+
+Reproduce it:
+```bash
+python scripts/run_classical_snn_ablation.py
+```
+Resumable (a finished `(dataset, seed)` run is skipped; an interrupted one resumes
+from its last checkpoint). Results: `results/revision/classical_snn/per_seed.csv`
+(every run), `results/revision/classical_snn/summary.csv` (mean ± std per
+dataset), raw per-run output and checkpoints under
+`results/revision/classical_snn/runs/`.
+
+Mean ± std over 5 seeds (7, 13, 42, 99, 2024), copied exactly from
+`results/revision/classical_snn/summary.csv`:
+
+| Dataset | Accuracy | Precision | Recall | F1 | FPR | ROC-AUC | MCC | Spike rate | Latency (ms/flow) |
+|---|---|---|---|---|---|---|---|---|---|
+| UNSW-NB15 | 0.8724 ± 0.0008 | 0.8473 ± 0.0061 | 0.8983 ± 0.0086 | 0.8720 ± 0.0012 | 0.1519 ± 0.0086 | 0.9533 ± 0.0014 | 0.7464 ± 0.0015 | 0.3296 ± 0.0926 | 0.0396 ± 0.0039 |
+| CIC-IDS2017 | 0.9801 ± 0.0027 | 0.9500 ± 0.0102 | 0.9493 ± 0.0097 | 0.9496 ± 0.0068 | 0.0123 ± 0.0026 | 0.9930 ± 0.0024 | 0.9373 ± 0.0084 | 0.2992 ± 0.0972 | 0.0298 ± 0.0051 |
+
+## 12. Status, and two things to know before you train
 
 The model, pipeline, baselines, noise simulation and ablations are implemented and
 verified end-to-end by `scripts/smoke_test.py` (11/11 checks pass on synthetic

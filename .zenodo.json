@@ -1,0 +1,28 @@
+{
+  "title": "QSNN-NIDS: A Quantum Leaky Integrate-and-Fire Spiking Network for Intrusion Detection under Simulated Depolarizing Noise — code and results",
+  "version": "1.1.0",
+  "upload_type": "software",
+  "license": "Apache-2.0",
+  "creators": [
+    {
+      "name": "Rana, Hiemal",
+      "affiliation": "School of Computer Science and Engineering, Vellore Institute of Technology, Vellore, India"
+    },
+    {
+      "name": "Raj, Piyush",
+      "affiliation": "School of Computer Science and Engineering, Vellore Institute of Technology, Vellore, India"
+    },
+    {
+      "name": "Jain, Jayati",
+      "affiliation": "School of Computer Science and Engineering, Vellore Institute of Technology, Vellore, India"
+    },
+    {
+      "name": "P, Thinakaran",
+      "affiliation": "School of Computer Science and Engineering, Vellore Institute of Technology, Vellore, India"
+    },
+    {
+      "name": "Krishnamoorthy, Parthiban",
+      "affiliation": "School of Computer Science and Engineering, Vellore Institute of Technology, Vellore, India"
+    }
+  ]
+}
